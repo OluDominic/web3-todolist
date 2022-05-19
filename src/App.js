@@ -42,6 +42,15 @@ function App() {
       setLoading(false)
     })
   }
+
+  const toggleCompleted=(taskId)=> {
+    setLoading(true);
+    todoList.methods.toggleCompleted(taskId).send({from: account})
+    .once('receipt', (receipt)=> {
+      setLoading(false)
+    })
+  }
+
   return (
     <div className="App">
       <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
@@ -58,7 +67,11 @@ function App() {
           <div id="loader" className="text-center"><p className="text-center">{loading}</p></div>
           {loading 
           ? <div id="loader" className="text-center"><p className="text-center">{loading}</p></div> 
-          : <TodoList tasks={tasks} createTask={createTask}/>
+          : <TodoList 
+          tasks={tasks} 
+          createTask={createTask}
+          toggleCompleted={toggleCompleted} 
+          />
           }
         </main>
       </div>
